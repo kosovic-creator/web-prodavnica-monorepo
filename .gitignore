@@ -1,0 +1,12 @@
+node_modules
+.next
+build
+dist
+.env
+.env.*
+pnpm-lock.yaml
+yarn.lock
+.DS_Store
+.idea
+.vscode
+*.log

@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "dev:admin": "npm run dev --workspace=admin",
+    "dev:client": "npm run dev --workspace=client",
+    "build:admin": "npm run build --workspace=admin",
+    "build:client": "npm run build --workspace=client",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "format": "prettier --write ."
+  }
+}
