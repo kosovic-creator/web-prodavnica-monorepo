@@ -1,9 +1,15 @@
 import "./globals.css";
 import { ReactNode } from "react";
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function RootLayout({
+  children,
+  params,
+}: {
+  children: ReactNode;
+  params: { locale: string };
+}) {
   return (
-    <html lang="sr">
+    <html lang={params.locale}>
       <body>{children}</body>
     </html>
   );

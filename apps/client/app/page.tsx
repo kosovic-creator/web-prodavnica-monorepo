@@ -1,11 +1,18 @@
-import React from "react";
-// import { Button } from '@web-prodavnica/ui/Button';
+import { prisma } from "@web-prodavnica/db";
 
-export default function Page() {
+
+export default async function Page() {
+  const korisnici = await prisma.korisnik.findMany();
   return (
-    <main style={{ padding: 32 }}>
-      <h1>Client App</h1>
-      {/* <Button onClick={() => alert('Radi!')}>Test UI Button</Button> */}
-    </main>
+    <div>
+     <>
+       <h1>Lista korisnika</h1>
+       <ul>
+         {korisnici.map((korisnik) => (
+           <li key={korisnik.id}>{korisnik.ime} {korisnik.prezime}</li>
+         ))}
+       </ul>
+     </>
+    </div>
   );
 }

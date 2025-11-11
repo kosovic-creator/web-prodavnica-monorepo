@@ -4,6 +4,9 @@
     "outDir": "build",
     "baseUrl": ".",
     "paths": {
+      "@/*": [
+        "./*"
+      ],
       "@web-prodavnica/ui/*": [
         "../../packages/ui/*"
       ],
