@@ -1,9 +1,7 @@
 'use client';
 import "./globals.css";
 import React, { ReactNode } from "react";
-import { KorpaProvider } from "@/components/KorpaContext";
-import { SessionProvider } from "next-auth/react";
-import Navbar from "@/components/Navbar";
+import ClientLayout from "@/components/ClientLayout";
 
 export default function RootLayout({
   children,
@@ -13,12 +11,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <SessionProvider>
-          <KorpaProvider>
-            <Navbar />
-            {children}
-          </KorpaProvider>
-        </SessionProvider>
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );
