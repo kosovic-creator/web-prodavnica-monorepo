@@ -10,8 +10,8 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
   return (
     <SessionProvider>
       <KorpaProvider>
-              <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
               <Navbar setSidebarOpen={setSidebarOpen} />
+              <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
         {children}
       </KorpaProvider>
     </SessionProvider>

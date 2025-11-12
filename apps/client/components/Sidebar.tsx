@@ -66,7 +66,7 @@ function SidebarContent({ open, onClose }: SidebarProps) {
     <>
       {/* Sidebar - modifikujemo za mobilnu verziju */}
       <div className={`
-  fixed top-0 left-0 h-screen bg-white shadow-lg z-100 transition-transform duration-300 ease-in-out
+        fixed top-16 left-0 h-[calc(100vh-4rem)] bg-white shadow-lg z-100 transition-transform duration-300 ease-in-out
         ${open ? 'translate-x-0' : '-translate-x-full'}
         w-64
         md:relative md:top-0 md:h-screen md:translate-x-0 md:z-auto
@@ -154,7 +154,7 @@ function SidebarContent({ open, onClose }: SidebarProps) {
       {/* Opciono: Dodajemo invisible overlay samo za zatvaranje klikom van sidebar-a */}
       {open && (
         <div
-          className="fixed top-0 left-64 right-0 bottom-0 z-90 md:hidden bg-black/20"
+          className="fixed top-16 left-64 right-0 bottom-0 z-90 md:hidden bg-black/20"
           onClick={onClose}
         />
       )}
