@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 // Slanje emaila korisniku - non-blocking
-import prisma from 'import { prisma } from '@web-prodavnica/db';';
+import { prisma } from '@web-prodavnica/db';
 
 
 export async function GET(req: Request) {

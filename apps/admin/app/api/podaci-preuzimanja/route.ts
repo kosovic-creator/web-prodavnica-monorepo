@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import prisma from 'import { prisma } from '@web-prodavnica/db';';
+import { prisma } from '@web-prodavnica/db';
 
 // GET - lista svih podataka preuzimanja za korisnika
 export async function GET(req: NextRequest) {
