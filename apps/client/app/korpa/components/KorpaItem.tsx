@@ -72,16 +72,18 @@ export default function KorpaItem({ stavka, onUpdate }: KorpaItemProps) {
   return (
     <div className="flex items-center gap-4 p-4 bg-white rounded-lg shadow-sm border">
       <div className="w-20 h-20 relative flex-shrink-0">
-        <Image
-          src={stavka.proizvod.slika || '/placeholder.png'}
-          alt={stavka.proizvod.naziv_sr}
-          fill
-          className="object-cover rounded-lg"
-          onError={(e) => {
-            const target = e.target as HTMLImageElement;
-            target.src = '/placeholder.png';
-          }}
-        />
+        {stavka.proizvod.slika ? (
+          <Image
+            src={stavka.proizvod.slika}
+            alt={stavka.proizvod.naziv_sr}
+            fill
+            className="object-cover rounded-lg"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-gray-200 text-gray-400 rounded-lg text-xs">
+            Nema slike
+          </div>
+        )}
       </div>
 
       <div className="flex-1">

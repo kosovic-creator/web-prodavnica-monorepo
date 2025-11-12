@@ -6,3 +6,5 @@ export * from './omiljeni';
 export * from './korpa';
 export * from './omiljeni';
 export * from './payment';
+export * from './podaci-preuzimanja';
+export * from './porudzbine';
