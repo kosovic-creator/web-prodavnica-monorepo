@@ -69,12 +69,15 @@ export default function KorpaItem({ stavka, onUpdate }: KorpaItemProps) {
 
   if (!stavka.proizvod) return null;
 
+  // Pronađi sliku: koristi slika ili prvu iz slike
+  const slika = stavka.proizvod.slika || (Array.isArray((stavka.proizvod as any).slike) && (stavka.proizvod as any).slike[0]);
+
   return (
     <div className="flex items-center gap-4 p-4 bg-white rounded-lg shadow-sm border">
       <div className="w-20 h-20 relative flex-shrink-0">
-        {stavka.proizvod.slika ? (
+        {slika ? (
           <Image
-            src={stavka.proizvod.slika}
+            src={slika}
             alt={stavka.proizvod.naziv_sr}
             fill
             className="object-cover rounded-lg"

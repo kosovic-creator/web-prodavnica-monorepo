@@ -176,7 +176,8 @@ export default function ProizvodClient({ proizvod, lang }: { proizvod: any, lang
               <h1 className="text-3xl font-bold text-gray-900 mb-4">{naziv}</h1>
               <div className="mb-6">
                 <div className="text-3xl font-bold text-blue-700 mb-2">{proizvod.cena} €</div>
-                <div className={`text-sm font-semibold ${proizvod.kolicina === 0 ? 'text-red-600' : 'text-green-600'}`}>
+                <div className={`text-sm font-semibold flex items-center gap-1 ${proizvod.kolicina === 0 ? 'text-red-600' : 'text-green-600'}`}>
+                  {proizvod.kolicina === 0 ? <span title="Nema na zalihama">🚫</span> : null}
                   {proizvod.kolicina === 0 ? 'Nema na zalihama' : `Količina: ${proizvod.kolicina}`}
                 </div>
               </div>

@@ -75,8 +75,8 @@ export default function ProizvodiClient({ proizvodi, total, page, pageSize, lang
                     </div>
                     <div className="flex items-center justify-between">
                       <div className="text-xl font-bold text-blue-700">{proizvod.cena} €</div>
-                      <div className={`text-xs font-medium px-2 py-1 rounded ${proizvod.kolicina === 0 ? 'bg-red-100 text-red-600' : 'bg-gray-100 text-gray-600'
-                        }`}>
+                      <div className={`text-xs font-medium px-2 py-1 rounded ${proizvod.kolicina === 0 ? 'bg-red-100 text-red-600 flex items-center gap-1' : 'bg-gray-100 text-gray-600'}`}>
+                        {proizvod.kolicina === 0 ? <span title="Nema na zalihama">🚫</span> : null}
                         {t('kolicina')}: {proizvod.kolicina}
                       </div>
                     </div>

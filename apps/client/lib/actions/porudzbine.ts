@@ -171,12 +171,16 @@ export async function kreirajPorudzbinu(data: KreirajPorudzbinuData) {
   try {
     const { korisnikId, ukupno, status, email, stavke } = data;
 
+    console.log('[BACKEND] kreirajPorudzbinu data:', data);
+
     if (!korisnikId || !stavke || stavke.length === 0) {
+      console.error('[BACKEND] Neispravni podaci za porudžbinu:', data);
       return {
         success: false,
         error: 'Neispravni podaci za porudžbinu'
       };
     }
+
 
     // Create order with order items in transaction
     const porudzbina = await prisma.$transaction(async (tx) => {
@@ -190,10 +194,20 @@ export async function kreirajPorudzbinu(data: KreirajPorudzbinuData) {
         }
       });
 
-      // Create order items
+      // Create order items and update product quantity
       const stavkePorudzbine = await Promise.all(
-        stavke.map(stavka =>
-          tx.stavkaPorudzbine.create({
+        stavke.map(async (stavka) => {
+          console.log('[BACKEND] Upisujem stavku porudzbine:', stavka);
+          // Smanji kolicinu proizvoda
+          await tx.proizvod.update({
+            where: { id: stavka.proizvodId },
+            data: {
+              kolicina: {
+                decrement: stavka.kolicina
+              }
+            }
+          });
+          return tx.stavkaPorudzbine.create({
             data: {
               porudzbinaId: novaPorudzbina.id,
               proizvodId: stavka.proizvodId,
@@ -202,8 +216,8 @@ export async function kreirajPorudzbinu(data: KreirajPorudzbinuData) {
               opis: stavka.opis,
               slika: Array.isArray(stavka.slike) ? stavka.slike[0] : stavka.slike
             }
-          })
-        )
+          });
+        })
       );
 
       return { ...novaPorudzbina, stavkePorudzbine };
@@ -212,12 +226,14 @@ export async function kreirajPorudzbinu(data: KreirajPorudzbinuData) {
     revalidatePath('/admin/porudzbine');
     revalidatePath('/moje-porudzbine');
 
+    console.log('[BACKEND] Porudzbina uspešno kreirana:', porudzbina);
+
     return {
       success: true,
       data: porudzbina
     };
   } catch (error) {
-    console.error('Error creating order:', error);
+    console.error('[BACKEND] Error creating order:', error);
     return {
       success: false,
       error: 'Greška pri kreiranju porudžbine'

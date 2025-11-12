@@ -7,7 +7,6 @@ import toast from 'react-hot-toast';
 import { FaTrashAlt, FaShoppingCart } from 'react-icons/fa';
 import {
   ocistiKorpu,
-  kreirajPorudzbinu,
   getPodaciPreuzimanja
 } from '@/lib/actions';
 import { useKorpa } from '@/components/KorpaContext';
@@ -72,11 +71,16 @@ export default function KorpaActions({ userId, stavke, onUpdate }: KorpaActionsP
               proizvodId: s.proizvod?.id || '',
               kolicina: s.kolicina,
               cena: s.proizvod?.cena || 0,
-              slika: s.proizvod?.slika || undefined
+              slike: (s.proizvod && Array.isArray((s.proizvod as any).slike)) ? (s.proizvod as any).slike : undefined
             })),
           };
 
-          const result = await kreirajPorudzbinu(porudzbinaData);
+          const response = await fetch('/api/kreiraj-porudzbinu', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(porudzbinaData),
+          });
+          const result = await response.json();
 
           if (!result.success) {
             toast.error(result.error || t('error') || 'Greška pri kreiranju porudžbine');
