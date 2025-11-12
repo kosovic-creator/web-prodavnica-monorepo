@@ -5,10 +5,11 @@ import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { Toaster, toast } from 'react-hot-toast';
 import { FaCartPlus, FaArrowLeft } from 'react-icons/fa';
-import OmiljeniButton from '@/components/OmiljeniButton';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { dodajUKorpu, getKorpa } from '@/lib/actions';
+import OmiljeniButton from '../components/OmiljeniButton';
 
 export default function ProizvodClient({ proizvod, lang }: { proizvod: any, lang: string }) {
   const router = useRouter();
