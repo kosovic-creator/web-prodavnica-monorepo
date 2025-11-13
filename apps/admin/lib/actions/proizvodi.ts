@@ -2,6 +2,7 @@
 
 import { prisma } from '@web-prodavnica/db';
 import { revalidatePath } from 'next/cache';
+import { Prisma } from '@prisma/client';
 
 export type ProizvodData = {
   cena: number;
@@ -222,7 +223,7 @@ export async function deleteProizvod(id: string) {
     }
 
     // Delete related data first using transaction
-    await prisma.$transaction(async (tx) => {
+    await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
       // Delete cart items
       await tx.stavkaKorpe.deleteMany({
         where: { proizvodId: id }
