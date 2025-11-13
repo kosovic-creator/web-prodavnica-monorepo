@@ -63,7 +63,7 @@ export async function getProizvodi(page: number = 1, pageSize: number = 10, sear
     ]);
 
     // Transform data to include both language fields
-    const proizvodiSaPrevod = proizvodi.map(proizvod => ({
+    const proizvodiSaPrevod = proizvodi.map((proizvod: any) => ({
       id: proizvod.id,
       cena: proizvod.cena,
       slike: proizvod.slike,
