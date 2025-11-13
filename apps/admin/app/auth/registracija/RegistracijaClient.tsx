@@ -5,14 +5,15 @@ import { useTranslation } from 'react-i18next';
 import { FaUserPlus, FaEnvelope, FaLock, FaUser } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from 'react-hot-toast';
-import { registrujKorisnika } from '@/lib/actions';
+import { registrujKorisnika } from "lib/actions/korisnici";
+
 
 interface RegistracijaClientProps {
   lang: string;
 }
 
 export default function RegistracijaClient({ lang }: RegistracijaClientProps) {
-  const { t } = useTranslation('auth', { lng: lang });
+
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [form, setForm] = useState({
@@ -31,11 +32,11 @@ export default function RegistracijaClient({ lang }: RegistracijaClientProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !lozinka || !potvrdaLozinke || !ime || !prezime) {
-      toast.error(t('register.fill_all_fields'));
+      toast.error('sva polja treba unjeti');
       return;
     }
     if (lozinka !== potvrdaLozinke) {
-      toast.error(t('register.passwords_do_not_match'));
+      toast.error('lozinke se ne poklapaju');
       return;
     }
     startTransition(async () => {
@@ -47,14 +48,14 @@ export default function RegistracijaClient({ lang }: RegistracijaClientProps) {
           prezime
         });
         if (!result.success) {
-          toast.error(result.error || t('register.error_occurred'));
+          toast.error(result.error || 'Došlo je do greške prilikom registracije');
           return;
         }
-        toast.success(t('register.register_success'));
+        toast.success('Uspešno ste se registrovali');
         router.push('/auth/prijava');
       } catch (error) {
         console.error('Registration error:', error);
-        toast.error(t('register.error_occurred'));
+        toast.error('Došlo je do greške prilikom registracije');
       }
     });
   };
@@ -65,7 +66,7 @@ export default function RegistracijaClient({ lang }: RegistracijaClientProps) {
         <Toaster position="top-right" />
         <h1 className="text-2xl md:text-3xl font-bold mb-6 flex items-center justify-center gap-2 text-center">
           <FaUserPlus className="text-blue-600" />
-          {t('register.title')}
+          {'Registracija'}
         </h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="flex items-center gap-3 border border-gray-300 p-3 rounded-lg hover:border-blue-400 transition-colors">
@@ -78,7 +79,7 @@ export default function RegistracijaClient({ lang }: RegistracijaClientProps) {
               className="w-full px-3 py-2 border border-gray-300 rounded-md input-focushover:border-blue-400 transition-colors !input-focus!ring-0"
               value={email}
               onChange={handleChange}
-              placeholder={t('register.email')}
+              placeholder={'e-mail'}
             />
           </div>
           <div className="flex items-center gap-3 border border-gray-300 p-3 rounded-lg hover:border-blue-400 transition-colors">
@@ -91,7 +92,7 @@ export default function RegistracijaClient({ lang }: RegistracijaClientProps) {
               className="w-full px-3 py-2 border border-gray-300 rounded-md input-focushover:border-blue-400 transition-colors !input-focus!ring-0"
               value={ime}
               onChange={handleChange}
-              placeholder={t('register.name')}
+              placeholder={'ime'}
             />
           </div>
           <div className="flex items-center gap-3 border border-gray-300 p-3 rounded-lg hover:border-blue-400 transition-colors">
@@ -104,7 +105,7 @@ export default function RegistracijaClient({ lang }: RegistracijaClientProps) {
               className="w-full px-3 py-2 border border-gray-300 rounded-md input-focushover:border-blue-400 transition-colors !input-focus!ring-0"
               value={prezime}
               onChange={handleChange}
-              placeholder={t('register.surname')}
+              placeholder={'prezime'}
             />
           </div>
           <div className="flex items-center gap-3 border border-gray-300 p-3 rounded-lg hover:border-blue-400 transition-colors">
@@ -117,7 +118,7 @@ export default function RegistracijaClient({ lang }: RegistracijaClientProps) {
               className="w-full px-3 py-2 border border-gray-300 rounded-md input-focushover:border-blue-400 transition-colors !input-focus!ring-0"
               value={lozinka}
               onChange={handleChange}
-              placeholder={t('register.password')}
+              placeholder={'lozinka'}
             />
           </div>
           <div className="flex items-center gap-3 border border-gray-300 p-3 rounded-lg hover:border-blue-400 transition-colors">
@@ -130,7 +131,7 @@ export default function RegistracijaClient({ lang }: RegistracijaClientProps) {
               className="w-full px-3 py-2 border border-gray-300 rounded-md input-focushover:border-blue-400 transition-colors !input-focus!ring-0"
               value={potvrdaLozinke}
               onChange={handleChange}
-              placeholder={t('register.confirm_password')}
+              placeholder={'potvrda lozinke'}
             />
           </div>
           <button
@@ -138,7 +139,7 @@ export default function RegistracijaClient({ lang }: RegistracijaClientProps) {
             className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors disabled:opacity-50"
             disabled={isPending}
           >
-            {isPending ? t('register.loading') : t('register.submit')}
+            {isPending ? 'Učitavanje...' : 'Registruj se'}
           </button>
         </form>
       </div>

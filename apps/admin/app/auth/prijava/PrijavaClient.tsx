@@ -2,9 +2,8 @@
 import { signIn } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useTranslation } from 'react-i18next';
+
 import { FaSignInAlt, FaEnvelope, FaLock, FaGoogle, FaSpinner, FaChevronDown, FaUser, FaCheck } from "react-icons/fa";
-import '@/i18n/config';
 
 // Tip za skorašnje prijave
 interface RecentLogin {
@@ -17,7 +16,7 @@ interface PrijavaClientProps {
 }
 
 export default function PrijavaClient({ lang }: PrijavaClientProps) {
-  const { t, i18n } = useTranslation('auth');
+
   const [email, setEmail] = useState("");
   const [lozinka, setLozinka] = useState("");
   const [error, setError] = useState("");
@@ -27,21 +26,16 @@ export default function PrijavaClient({ lang }: PrijavaClientProps) {
   const [recentLogins, setRecentLogins] = useState<RecentLogin[]>([]);
   const [showRecentLogins, setShowRecentLogins] = useState(false);
 
-    // Sprečava hydration mismatch: renderuj tek kad jezik bude postavljen
-
+  // Sprečava hydration mismatch: renderuj tek kad jezik bude postavljen
 
   useEffect(() => {
-    // Set language if different
-    if (i18n.language !== lang) {
-      i18n.changeLanguage(lang);
-    }
     const saved = localStorage.getItem('recentLogins');
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
         setRecentLogins(parsed);
       } catch (error) {
-          console.error(t('login.errorLoadingRecent'), error);
+        console.error('greška pri učitavanju skorašnjih prijava', error);
       }
     }
     const savedEmail = localStorage.getItem('savedEmail');
@@ -50,7 +44,7 @@ export default function PrijavaClient({ lang }: PrijavaClientProps) {
       setEmail(savedEmail);
       setRememberMe(true);
     }
-  }, [lang, i18n, t]);
+  }, []);
 
   const saveRecentLogin = (email: string) => {
     const newLogin: RecentLogin = {
@@ -113,22 +107,22 @@ export default function PrijavaClient({ lang }: PrijavaClientProps) {
           router.push("/");
         }
       } else {
-          setError(t('login.invalidCredentials'));
+          setError( 'Neispravni podaci za prijavu');
       }
     } catch {
-        setError(t('login.errorOccurred') || t('login.errorOccurred'));
+        setError( 'Došlo je do greške prilikom prijave');
     } finally {
       setLoading(false);
     }
   };
 
-    if (i18n.language !== lang) return null;
+
   return (
     <div className="min-h-screen flex items-center justify-center px-4 py-8 bg-gray-50">
       <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6">
         <h1 className="text-2xl md:text-3xl font-bold mb-6 flex items-center justify-center gap-2 text-center">
           <FaSignInAlt className="text-blue-600" />
-                  {t('login.title')}
+                  '{ 'Prijava'}
         </h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="relative recent-logins-container">
@@ -136,7 +130,7 @@ export default function PrijavaClient({ lang }: PrijavaClientProps) {
               <FaEnvelope className="text-blue-600 text-lg flex-shrink-0" />
               <input
                 type="email"
-                              placeholder={t('login.email')}
+                              placeholder='e-mail'
                 className="flex-1 outline-none bg-transparent text-base"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
@@ -149,7 +143,7 @@ export default function PrijavaClient({ lang }: PrijavaClientProps) {
                   onClick={() => setShowRecentLogins(!showRecentLogins)}
                   className="text-blue-600 hover:text-blue-800 p-1 transition-colors"
                   disabled={loading}
-                  title={t('login.recentLogins')}
+                  title='Nedavni prijavljeni korisnici'
                 >
                   <FaChevronDown className={`transition-transform duration-200 ${showRecentLogins ? 'rotate-180' : ''}`} />
                 </button>
@@ -158,7 +152,7 @@ export default function PrijavaClient({ lang }: PrijavaClientProps) {
             {showRecentLogins && recentLogins.length > 0 && (
               <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg z-10 max-h-48 overflow-y-auto">
                 <div className="p-2 text-sm font-medium text-gray-600 border-b">
-                  {t('login.recentLogins')}
+                  {'Nedavni prijavljeni korisnici'}
                 </div>
                 {recentLogins.map((login, index) => (
                   <div
@@ -186,7 +180,7 @@ export default function PrijavaClient({ lang }: PrijavaClientProps) {
                       onClick={(e) => removeRecentLogin(login.email, e)}
                       className="p-2 mr-2 text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all duration-200"
                       disabled={loading}
-                            title={t('login.remove')}
+                            title='ukloni'
                     >
                       ✕
                     </button>
@@ -199,7 +193,7 @@ export default function PrijavaClient({ lang }: PrijavaClientProps) {
             <FaLock className="text-blue-600 text-lg flex-shrink-0" />
             <input
               type="password"
-                          placeholder={t('login.password')}
+                          placeholder='Lozinka'
               className="flex-1 outline-none bg-transparent text-base"
               value={lozinka}
               onChange={e => setLozinka(e.target.value)}
@@ -224,7 +218,7 @@ export default function PrijavaClient({ lang }: PrijavaClientProps) {
                   {rememberMe && <FaCheck className="text-white text-xs" />}
                 </div>
               </div>
-                          {t('login.rememberMe')}
+                          {'Zapamti me'}
             </label>
           </div>
           <button
@@ -233,7 +227,7 @@ export default function PrijavaClient({ lang }: PrijavaClientProps) {
             className="w-full flex items-center justify-center gap-2 bg-blue-600 text-white px-4 py-3 rounded-lg shadow-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-base font-medium cursor-pointer"
           >
             {loading ? <FaSpinner className="animate-spin" /> : <FaSignInAlt />}
-                      {loading ? t('login.loggingIn') : t('login.login')}
+                      {loading ? 'Prijavljivanje' : 'Prijava'}
           </button>
         </form>
         {error && (
@@ -247,7 +241,7 @@ export default function PrijavaClient({ lang }: PrijavaClientProps) {
               <div className="w-full border-t border-gray-300" />
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">{t('login.orContinueWith')}</span>
+              <span className="px-2 bg-white text-gray-500">{'Ili nastavi sa'}</span>
             </div>
           </div>
           <button
@@ -256,18 +250,18 @@ export default function PrijavaClient({ lang }: PrijavaClientProps) {
             className="w-full flex items-center justify-center gap-3 bg-blue-500 text-white px-4 py-3 rounded-lg shadow-md hover:bg-blue-900 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-base font-medium cursor-pointer"
           >
             <FaGoogle className="google-icon text-red-400" />
-                      {t('login.continueWithGoogle')}
+                      {'Nastavi sa Google'}
           </button>
         </div>
         <div className="mt-6 text-center border-t pt-4">
           <p className="text-gray-600 text-sm">
-            {t('login.noAccount')}{' '}
+            {'Nemate nalog?'}{' '}
             <button
               onClick={() => router.push('/auth/registracija')}
               disabled={loading}
               className="text-blue-600 hover:text-blue-800 font-medium underline transition-colors disabled:opacity-50"
             >
-              {t('login.registerHere')}
+              {'Registrujte se ovde'}
             </button>
           </p>
         </div>
