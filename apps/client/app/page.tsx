@@ -6,12 +6,12 @@ export default async function Page() {
   return (
     <div>
      <>
-       <h1>Lista korisnika</h1>
+       {/* <h1>Lista korisnika</h1>
        <ul>
          {korisnici.map((korisnik) => (
            <li key={korisnik.id}>{korisnik.ime} {korisnik.prezime}</li>
          ))}
-       </ul>
+       </ul> */}
      </>
     </div>
   );
