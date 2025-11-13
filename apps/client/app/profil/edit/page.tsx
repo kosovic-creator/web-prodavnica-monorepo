@@ -7,8 +7,9 @@ import { FaUser, FaSave, FaTimes } from 'react-icons/fa';
 import toast, { Toaster } from 'react-hot-toast';
 import Link from 'next/link';
 import { getKorisnikById, updateProfilKorisnika, updatePodaciPreuzimanja, createPodaciPreuzimanja } from '@/lib/actions';
-import { korisnikSchema } from '@/zod';
+
 import { useTranslation } from 'react-i18next';
+import { korisnikSchema } from '@/zod-schemas';
 
 interface Korisnik {
   id: string;
@@ -181,7 +182,7 @@ export default function EditProfilPage() {
       <div className="max-w-2xl mx-auto px-4">
         <h1 className="text-2xl md:text-3xl font-bold mb-6 flex items-center gap-2 text-center justify-center">
           <FaUser className="text-blue-600" />
-          {t('title')} 
+          {t('title')}
         </h1>
 
         <div className="bg-white rounded-lg shadow-md p-6">

@@ -38,7 +38,7 @@ export async function getOmiljeni(korisnikId: string) {
     });
 
     // Transform data to match the expected format with prevodi structure
-    const transformedOmiljeni = omiljeni.map(item => ({
+    const transformedOmiljeni = omiljeni.map((item: any) => ({
       ...item,
       proizvod: {
         id: item.proizvod.id,

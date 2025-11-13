@@ -3,6 +3,7 @@
 
 import { prisma } from '@web-prodavnica/db';
 import { revalidatePath } from 'next/cache';
+import { Prisma } from "@prisma/client";
 
 type KreirajPorudzbinuData = {
   korisnikId: string;
@@ -183,7 +184,7 @@ export async function kreirajPorudzbinu(data: KreirajPorudzbinuData) {
 
 
     // Create order with order items in transaction
-    const porudzbina = await prisma.$transaction(async (tx) => {
+    const porudzbina = await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
       // Create the order
       const novaPorudzbina = await tx.porudzbina.create({
         data: {

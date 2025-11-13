@@ -2,6 +2,7 @@
 
 import { prisma } from '@web-prodavnica/db';
 import { revalidatePath } from 'next/cache';
+import { Prisma } from '@prisma/client';
 
 export type ProizvodData = {
   cena: number;
@@ -63,7 +64,7 @@ export async function getProizvodi(page: number = 1, pageSize: number = 10, sear
     ]);
 
     // Transform data to include both language fields
-    const proizvodiSaPrevod = proizvodi.map(proizvod => ({
+    const proizvodiSaPrevod = proizvodi.map((proizvod: any) => ({
       id: proizvod.id,
       cena: proizvod.cena,
       slike: proizvod.slike,
@@ -222,7 +223,7 @@ export async function deleteProizvod(id: string) {
     }
 
     // Delete related data first using transaction
-    await prisma.$transaction(async (tx) => {
+    await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
       // Delete cart items
       await tx.stavkaKorpe.deleteMany({
         where: { proizvodId: id }
