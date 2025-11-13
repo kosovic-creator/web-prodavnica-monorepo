@@ -1,20 +1,8 @@
 "use client";
 
 import { SessionProvider, useSession } from "next-auth/react";
-import Navbar from "components/Navbar";
+import AdminNavbar from "./Navbar";
 import React, { ReactNode } from "react";
-
-function AdminLayoutContent({ children }: { children: ReactNode }) {
-    const [sidebarOpen, setSidebarOpen] = React.useState(false);
-    const { data: session } = useSession();
-
-    return (
-        <>
-            {session && <Navbar session={session} />}
-            {children}
-        </>
-    );
-}
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
     return (
@@ -24,11 +12,12 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
     );
 }
 
-// apps/admin/app/page.tsx ili neki child layout
-export function AdminDashboard() {
+function AdminLayoutContent({ children }: { children: ReactNode }) {
+  const { data: session } = useSession();
   return (
-    <div className="max-w-7xl mx-auto">
-      {/* ... */}
-    </div>
-  );
+      <>
+        {session && <AdminNavbar session={session} />}
+        {children}
+      </>
+    );
 }
