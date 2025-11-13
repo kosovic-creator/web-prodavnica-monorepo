@@ -3,7 +3,7 @@
 import React, { useState, useTransition } from 'react';
 import { FaSave, FaTimes, FaEye, FaEyeSlash } from "react-icons/fa";
 import { useRouter } from 'next/navigation';
-import { createKorisnik } from '@/lib/actions/korisnici';
+import { createKorisnik } from 'lib/actions/korisnici';
 import toast from 'react-hot-toast';
 
 export default function DodajKorisnikaPage() {

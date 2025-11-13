@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { FaTimes, FaSave, FaBox } from 'react-icons/fa';
 import { toast } from 'react-hot-toast';
-import ImageUpload from '@/components/ImageUpload';
+import ImageUpload from 'components/ImageUpload';
 
 export default function DodajProizvodModalClient() {
   const router = useRouter();

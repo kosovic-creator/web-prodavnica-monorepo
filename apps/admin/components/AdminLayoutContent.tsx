@@ -1,15 +1,16 @@
 // components/AdminLayoutContent.tsx
 "use client";
 import { useSession } from "next-auth/react";
-import Navbar from "components/Navbar";
+
 import React, { ReactNode } from "react";
+import NavbarAdmin from "./NavbarAdmin";
 
 export default function AdminLayoutContent({ children }: { children: ReactNode }) {
     const { data: session } = useSession();
 
     return (
         <>
-            {session && <Navbar session={session} />}
+            {session && <NavbarAdmin session={session} />}
             {children}
         </>
     );

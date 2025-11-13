@@ -1,6 +1,6 @@
 export const runtime = "nodejs";
 import { NextResponse } from "next/server";
-import prisma from "import { prisma } from '@web-prodavnica/db';";
+import {prisma} from '@web-prodavnica/db';
 import bcrypt from "bcryptjs";
 
 export async function POST(request: Request) {

@@ -11,6 +11,7 @@
     "prisma:migrate": "prisma migrate deploy --schema=../../packages/db/prisma/schema.prisma"
   },
   "dependencies": {
+    "cloudinary": "^2.7.0",
     "@tailwindcss/postcss": "^4.1.17",
     "accept-language": "^3.0.20",
     "bcryptjs": "^3.0.3",
