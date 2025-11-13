@@ -31,7 +31,7 @@ function NavbarContent({ setSidebarOpen }: NavbarProps) {
   const { data: session } = useSession();
   const [brojUKorpi, setBrojUKorpi] = useState(0);
   const { brojStavki, setBrojStavki } = useKorpa();
-  const isAdmin = session?.user?.uloga === 'admin';
+  // Uklonjeno: isAdmin logika i prikaz admin sekcije
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams(); // Sada je u Suspense boundary
@@ -135,8 +135,6 @@ function NavbarContent({ setSidebarOpen }: NavbarProps) {
     <>
       {/* Main Navbar */}
       <nav className="sticky top-0 z-50 flex items-center justify-between gap-2 sm:gap-4 p-3 sm:p-4 border-b border-gray-200 bg-white shadow-sm">
-        {!isAdmin && (
-          <>
             {/* Left Section - Hamburger + Logo */}
             <div className="flex items-center gap-2 sm:gap-3 min-w-0">
               {/* Hamburger - larger touch target */}
@@ -186,7 +184,7 @@ function NavbarContent({ setSidebarOpen }: NavbarProps) {
                         const lang = params.get('lang') || currentLanguage;
                         router.push(`/proizvodi?lang=${lang}`);
                       }}
-                      className="text-gray-400 hover:text-red-600 w-8 h-8 rounded-full hover:bg-gray-100 transition-colors flex items-center justify-center text-lg font-bold flex-shrink-0"
+                      className="text-gray-400 hover:text-red-600 w-8 h-8 rounded-full hover:bg-gray-100 transition-colors flex items-center justify-center text-lg font-bold shrink-0"
                       title="Obriši pretragu"
                     >
                       ×
@@ -339,50 +337,10 @@ function NavbarContent({ setSidebarOpen }: NavbarProps) {
                 </div>
               )}
             </div>
-          </>
-        )}
-
-        {/* Admin Section */}
-        {isAdmin && (
-          <div className="flex items-center gap-2 ml-auto">
-            <Link
-              href="/admin/korisnici"
-              className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-blue-50 transition touch-manipulation"
-            >
-              <FaUsers className="text-blue-600" />
-              <span className="hidden sm:inline">
-                Korisnici
-              </span>
-            </Link>
-            <Link
-              href="/admin/proizvodi"
-              className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-blue-50 transition touch-manipulation"
-            >
-              <FaBox className="text-blue-600" />
-              Artikli
-            </Link>
-            <Link
-              href="/admin/porudzbine"
-              className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-blue-50 transition touch-manipulation"
-            >
-              <FaShoppingCart className="text-blue-600" />
-              Porudžbine
-            </Link>
-            <button
-              onClick={() => signOut({ callbackUrl: "/auth/prijava" })}
-              className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-blue-50 transition touch-manipulation"
-            >
-              <FaSignOutAlt className="text-blue-600" />
-              <span className="hidden sm:inline">
-                {isMounted ? t('logout') : (currentLanguage === 'en' ? 'Logout' : 'Odjava')}
-              </span>
-            </button>
-          </div>
-        )}
       </nav>
 
       {/* Mobile Search Bar */}
-      {showMobileSearch && !isAdmin && (
+      {showMobileSearch && (
         <div className="lg:hidden bg-white border-b border-gray-200 p-3">
           <form onSubmit={handleSearch} className="flex items-center gap-2">
             <div className="flex items-center flex-1 gap-2">
@@ -401,7 +359,7 @@ function NavbarContent({ setSidebarOpen }: NavbarProps) {
                     setLocalSearch('');
                     setSearchTerm('');
                   }}
-                  className="text-gray-400 hover:text-red-600 w-8 h-8 rounded-full hover:bg-gray-100 transition-colors flex items-center justify-center text-lg font-bold flex-shrink-0"
+                  className="text-gray-400 hover:text-red-600 w-8 h-8 rounded-full hover:bg-gray-100 transition-colors flex items-center justify-center text-lg font-bold shrink-0"
                   title="Obriši pretragu"
                 >
                   ×

@@ -1,9 +1,9 @@
 "use client";
 import { KorpaProvider } from "@/components/KorpaContext";
 import { SessionProvider } from "next-auth/react";
-import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
 import React, { ReactNode } from "react";
+import Navbar from "./NavbarClient";
 
 export default function ClientLayout({ children }: { children: ReactNode }) {
     const [sidebarOpen, setSidebarOpen] = React.useState(false);

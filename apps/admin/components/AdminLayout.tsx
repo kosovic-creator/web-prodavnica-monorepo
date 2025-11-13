@@ -1,8 +1,8 @@
 "use client";
 
 import { SessionProvider, useSession } from "next-auth/react";
-import AdminNavbar from "./Navbar";
 import React, { ReactNode } from "react";
+import AdminNavbar from "./NavbarAdmin";
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
     return (
